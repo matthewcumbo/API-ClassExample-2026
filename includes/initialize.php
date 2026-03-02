@@ -9,7 +9,14 @@
     defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
     defined('SITE_ROOT') ? null : define('SITE_ROOT', DS.'Applications'.DS.'mamp'.DS.'htdocs'.DS.'API-ClassExample-2026');
 
+    // set up core path to be used when requiring class files
+    defined("CORE_PATH") ? null : define("CORE_PATH",SITE_ROOT.DS."core".DS);
+
+    // load config file first for db connection
     require_once("config.php");
+
+    // load classes
+    require_once(CORE_PATH."user.php");
 
 
 ?>
