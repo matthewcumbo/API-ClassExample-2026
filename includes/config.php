@@ -1,7 +1,8 @@
 <?php 
+// This file is the database connection configuration setup
 
 $db_user = 'root';
-$db_password = '';
+$db_password = 'root';
 $db_name = 'apiExample2026';
 
 // PDO = PHP Data Objects 
