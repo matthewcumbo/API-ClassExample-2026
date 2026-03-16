@@ -17,6 +17,7 @@
 
     // load classes
     require_once(CORE_PATH."user.php");
+    require_once(CORE_PATH."post.php");
 
 
 ?>
