@@ -53,6 +53,92 @@ class Comment{
         return $stmt;
     }
 
+    // Create a new Comment record 
+    public function create(){
+        $query = "INSERT INTO {$this->table}
+                    (comment, postId, userId)
+                    VALUES (:comment,:postId,:userId);";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->comment = htmlspecialchars(strip_tags($this->comment));
+        $this->postId = htmlspecialchars(strip_tags($this->postId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":comment", $this->comment);
+        $stmt->bindParam(":postId", $this->postId);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+    // Update a Comment record
+    public function update(){
+        $query = "UPDATE {$this->table}
+                    SET comment = :comment,
+                        postId = :postId,
+                        userId = :userId
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->comment = htmlspecialchars(strip_tags($this->comment));
+        $this->postId = htmlspecialchars(strip_tags($this->postId));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":comment", $this->comment);
+        $stmt->bindParam(":postId", $this->postId);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+// Update User ID of a Post record
+    public function updateUserId(){
+        $query = "UPDATE {$this->table}
+                    SET userId = :userId
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+
+
+
 }
 
 ?>

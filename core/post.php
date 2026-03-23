@@ -53,6 +53,33 @@ class Post{
         return $stmt;
     }
 
+    // Create a new Post record 
+    public function create(){
+        $query = "INSERT INTO {$this->table}
+                    (title, content, userId)
+                    VALUES (:title,:content,:userId);";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":title", $this->title);
+        $stmt->bindParam(":content", $this->content);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
     // Update a Post record
     public function update(){
         $query = "UPDATE {$this->table}
