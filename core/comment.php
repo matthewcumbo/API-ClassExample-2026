@@ -111,7 +111,7 @@ class Comment{
         return false;
     }
 
-// Update User ID of a Post record
+// Update User ID of a Comment record
     public function updateUserId(){
         $query = "UPDATE {$this->table}
                     SET userId = :userId

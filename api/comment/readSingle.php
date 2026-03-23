@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type,
 
 include_once("../../includes/initialize.php");
 
-// Create a new instance of the User class
+// Create a new instance of the Comment class
 // This allows us to use its structure and functions
 $comment = new Comment($db);
 

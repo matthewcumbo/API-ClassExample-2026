@@ -9,14 +9,14 @@ header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type,
 
 include_once("../../includes/initialize.php");
 
-// Create a new instance of the User class
+// Create a new instance of the Post class
 // This allows us to use its structure and functions
 $post = new Post($db);
 
 // read submitted json data from request body 
 $data = json_decode(file_get_contents("php://input"));
 
-// fill in user instance properties with decoded values from request
+// fill in Post instance properties with decoded values from request
 $post->title = $data->title;
 $post->content = $data->content;
 $post->userId = $data->userId;
