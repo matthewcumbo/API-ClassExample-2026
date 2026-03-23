@@ -118,6 +118,32 @@ class User{
         return false;
     }
 
+// Update Age of a User record
+    public function updateAge(){
+        $query = "UPDATE {$this->table}
+                    SET age = :age
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->age = htmlspecialchars(strip_tags($this->age));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":age", $this->age);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+
 }
 
 ?>
