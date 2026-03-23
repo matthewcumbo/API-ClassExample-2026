@@ -53,6 +53,62 @@ class Post{
         return $stmt;
     }
 
+    // Update a Post record
+    public function update(){
+        $query = "UPDATE {$this->table}
+                    SET title = :title,
+                        content = :content,
+                        userId = :userId
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":title", $this->title);
+        $stmt->bindParam(":content", $this->content);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+// Update User ID of a Post record
+    public function updateUserId(){
+        $query = "UPDATE {$this->table}
+                    SET userId = :userId
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->userId = htmlspecialchars(strip_tags($this->userId));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":userId", $this->userId);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
 }
 
 ?>
