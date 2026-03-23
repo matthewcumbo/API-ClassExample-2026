@@ -118,7 +118,7 @@ class User{
         return false;
     }
 
-// Update Age of a User record
+    // Update Age of a User record
     public function updateAge(){
         $query = "UPDATE {$this->table}
                     SET age = :age
@@ -133,6 +133,28 @@ class User{
         // bind parameters to sql statement
         $stmt->bindParam(":id", $this->id);
         $stmt->bindParam(":age", $this->age);
+
+        if($stmt->execute())
+        {
+            return true;
+        }
+
+        printf("Error %s. \n", $stmt->error);
+        return false;
+    }
+
+    // Delete a User record
+    public function delete(){
+        $query = "DELETE FROM {$this->table}
+                    WHERE id = :id;";
+
+        $stmt = $this->conn->prepare($query);
+
+        // clean up data sent by user/3rd party system (for security)
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // bind parameters to sql statement
+        $stmt->bindParam(":id", $this->id);
 
         if($stmt->execute())
         {
