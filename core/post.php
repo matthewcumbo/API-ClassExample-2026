@@ -32,7 +32,7 @@ class Post{
         return $stmt;
     }
 
-    // Read a single User record by id
+    // Read a single Post record by id
     public function readSingle(){
         $query = "SELECT * 
                     FROM {$this->table} AS {$this->alias}
@@ -49,6 +49,20 @@ class Post{
             $this->content    = $row["content"];
             $this->userId     = $row["userId"];
         }
+
+        return $stmt;
+    }
+
+    // Read all Post records created by a single User (based on UserId)
+    public function readByUserId(){
+        $query = "SELECT * 
+                    FROM {$this->table} AS {$this->alias}
+                    WHERE {$this->alias}.userId = ?
+                    LIMIT 1;";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->userId);
+        $stmt->execute();
 
         return $stmt;
     }
