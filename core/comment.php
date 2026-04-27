@@ -53,6 +53,19 @@ class Comment{
         return $stmt;
     }
 
+    // Read all Comments for a specific Post
+    public function readByPostId(){
+        $query = "SELECT * 
+                    FROM {$this->table} AS {$this->alias}
+                    WHERE {$this->alias}.postId = ?;";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $this->postId);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     // Create a new Comment record 
     public function create(){
         $query = "INSERT INTO {$this->table}

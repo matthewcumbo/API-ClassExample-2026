@@ -57,8 +57,7 @@ class Post{
     public function readByUserId(){
         $query = "SELECT * 
                     FROM {$this->table} AS {$this->alias}
-                    WHERE {$this->alias}.userId = ?
-                    LIMIT 1;";
+                    WHERE {$this->alias}.userId = ?;";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->userId);
